@@ -1,0 +1,9 @@
+prod:
+  hostname: tzemp.ch
+  port: 2121
+  user: tzemp
+  http_user: tzemp
+  password: ~
+  deploy_path: /backend.classifier.tzemp.ch
+  sshOptions:
+    StrictHostKeyChecking: no
