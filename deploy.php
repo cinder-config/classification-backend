@@ -1,7 +1,18 @@
 <?php
+
 namespace Deployer;
 
-require 'recipe/symfony.php';
+require 'recipe/symfony4.php';
+
+// Metanet Hack
+set('bin/php', function () {
+    return '/opt/php74/bin/php';
+});
+
+// Metanet Hack
+set('bin/composer', function () {
+    return '/opt/php74/bin/php /usr/bin/composer';
+});
 
 // Project name
 set('application', 'ciclassifier-data-backend');
@@ -12,26 +23,4 @@ set('repository', 'git@github.com:tzemp/ciclassifier-data-backend.git');
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true);
 
-// Shared files/dirs between deploys
-add('shared_files', []);
-add('shared_dirs', []);
-
-// Writable dirs by web server
-add('writable_dirs', []);
-set('allow_anonymous_stats', false);
-
-// Tasks
-
 inventory('servers.yaml');
-
-task('build', function () {
-    run('cd {{release_path}} && build');
-});
-
-// [Optional] if deploy fails automatically unlock.
-after('deploy:failed', 'deploy:unlock');
-
-// Migrate database before symlink new release.
-
-before('deploy:symlink', 'database:migrate');
-
