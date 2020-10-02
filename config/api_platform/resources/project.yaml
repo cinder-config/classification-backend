@@ -1,0 +1,5 @@
+App\Entity\Project:
+  itemOperations:
+    get: ~
+  collectionOperations:
+    get: ~

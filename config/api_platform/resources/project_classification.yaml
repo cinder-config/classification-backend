@@ -1,0 +1,9 @@
+App\Entity\ProjectClassification:
+  itemOperations:
+    get: ~
+    patch: ~
+  collectionOperations:
+    next:
+      method: 'GET'
+      path: '/project_classification/next'
+      controller: 'App\Controller\ProjectClassificationNext'
