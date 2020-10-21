@@ -33,17 +33,27 @@ class Project
     /**
      * @ORM\Column(type="string")
      */
-    private string $configurationUrl;
+    private string $defaultBranch;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="integer")
      */
-    private string $gitUrl;
+    private int $commits;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="integer")
      */
-    private string $travisCiUrl;
+    private int $stars;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private int $forks;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private \DateTimeInterface $lastChangeAt;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ProjectClassification", mappedBy="project")
@@ -86,34 +96,54 @@ class Project
         $this->configuration = $configuration;
     }
 
-    public function getConfigurationUrl(): string
+    public function getDefaultBranch(): string
     {
-        return $this->configurationUrl;
+        return $this->defaultBranch;
     }
 
-    public function setConfigurationUrl(string $configurationUrl): void
+    public function setDefaultBranch(string $defaultBranch): void
     {
-        $this->configurationUrl = $configurationUrl;
+        $this->defaultBranch = $defaultBranch;
     }
 
-    public function getGitUrl(): string
+    public function getCommits(): int
     {
-        return $this->gitUrl;
+        return $this->commits;
     }
 
-    public function setGitUrl(string $gitUrl): void
+    public function setCommits(int $commits): void
     {
-        $this->gitUrl = $gitUrl;
+        $this->commits = $commits;
     }
 
-    public function getTravisCiUrl(): string
+    public function getStars(): int
     {
-        return $this->travisCiUrl;
+        return $this->stars;
     }
 
-    public function setTravisCiUrl(string $travisCiUrl): void
+    public function setStars(int $stars): void
     {
-        $this->travisCiUrl = $travisCiUrl;
+        $this->stars = $stars;
+    }
+
+    public function getForks(): int
+    {
+        return $this->forks;
+    }
+
+    public function setForks(int $forks): void
+    {
+        $this->forks = $forks;
+    }
+
+    public function getLastChangeAt(): \DateTimeInterface
+    {
+        return $this->lastChangeAt;
+    }
+
+    public function setLastChangeAt(\DateTimeInterface $lastChangeAt): void
+    {
+        $this->lastChangeAt = $lastChangeAt;
     }
 
     public function getClassifications(): Collection

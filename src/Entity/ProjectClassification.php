@@ -16,7 +16,7 @@ class ProjectClassification
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="classifications")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private Project $project;
 
