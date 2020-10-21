@@ -22,6 +22,26 @@ class User implements UserInterface
     private string $accessKey;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private int $experienceYears;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private int $experienceComparedToOthers;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private bool $usedTravisCI;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private bool $consent;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\ProjectClassification", mappedBy="user")
      */
     private Collection $classifications;
@@ -64,5 +84,45 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         return false;
+    }
+
+    public function getExperienceYears(): int
+    {
+        return $this->experienceYears;
+    }
+
+    public function setExperienceYears(int $experienceYears): void
+    {
+        $this->experienceYears = $experienceYears;
+    }
+
+    public function getExperienceComparedToOthers(): int
+    {
+        return $this->experienceComparedToOthers;
+    }
+
+    public function setExperienceComparedToOthers(int $experienceComparedToOthers): void
+    {
+        $this->experienceComparedToOthers = $experienceComparedToOthers;
+    }
+
+    public function isUsedTravisCI(): bool
+    {
+        return $this->usedTravisCI;
+    }
+
+    public function setUsedTravisCI(bool $usedTravisCI): void
+    {
+        $this->usedTravisCI = $usedTravisCI;
+    }
+
+    public function isConsent(): bool
+    {
+        return $this->consent;
+    }
+
+    public function setConsent(bool $consent): void
+    {
+        $this->consent = $consent;
     }
 }
