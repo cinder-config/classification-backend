@@ -45,6 +45,11 @@ class ProjectClassification
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
+    private ?bool $integrated = null;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
     private ?bool $interesting = null;
 
     /**
@@ -98,6 +103,16 @@ class ProjectClassification
     public function setTailored(?bool $tailored): void
     {
         $this->tailored = $tailored;
+    }
+
+    public function getIntegrated(): ?bool
+    {
+        return $this->integrated;
+    }
+
+    public function setIntegrated(?bool $integrated): void
+    {
+        $this->integrated = $integrated;
     }
 
     public function getInteresting(): ?bool

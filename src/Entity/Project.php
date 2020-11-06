@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Model\Id;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
@@ -21,6 +22,11 @@ class Project
     private string $name;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private string $language;
+
+    /**
      * @ORM\Column(type="text")
      */
     private string $description;
@@ -34,6 +40,11 @@ class Project
      * @ORM\Column(type="string")
      */
     private string $defaultBranch;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private string $travisDestination;
 
     /**
      * @ORM\Column(type="integer")
@@ -76,6 +87,16 @@ class Project
         $this->name = $name;
     }
 
+    public function getLanguage(): string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(string $language): void
+    {
+        $this->language = $language;
+    }
+
     public function getDescription(): string
     {
         return $this->description;
@@ -104,6 +125,16 @@ class Project
     public function setDefaultBranch(string $defaultBranch): void
     {
         $this->defaultBranch = $defaultBranch;
+    }
+
+    public function getTravisDestination(): string
+    {
+        return $this->travisDestination;
+    }
+
+    public function setTravisDestination(string $travisDestination): void
+    {
+        $this->travisDestination = $travisDestination;
     }
 
     public function getCommits(): int
@@ -154,5 +185,18 @@ class Project
     public function setClassifications(Collection $classifications): void
     {
         $this->classifications = $classifications;
+    }
+
+    public function getValidClassifications(): Collection
+    {
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('status', 'done'));
+
+        return $this->classifications->matching($criteria);
+    }
+
+    public function hasValidClassifications(): bool
+    {
+        return $this->getValidClassifications()->count() > 0;
     }
 }

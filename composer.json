@@ -22,7 +22,8 @@
         "symfony/security-bundle": "5.1.*",
         "symfony/twig-bundle": "5.1.*",
         "symfony/validator": "5.1.*",
-        "symfony/yaml": "5.1.*"
+        "symfony/yaml": "5.1.*",
+      "ext-json": "*"
     },
     "require-dev": {
         "symfony/stopwatch": "^5.1",
