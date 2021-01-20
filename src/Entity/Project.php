@@ -62,6 +62,16 @@ class Project
     private int $forks;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    private string $bucket;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private bool $featuresExtracted;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private \DateTimeInterface $lastChangeAt;
@@ -165,6 +175,26 @@ class Project
     public function setForks(int $forks): void
     {
         $this->forks = $forks;
+    }
+
+    public function getBucket(): string
+    {
+        return $this->bucket;
+    }
+
+    public function setBucket(string $bucket): void
+    {
+        $this->bucket = $bucket;
+    }
+
+    public function isFeaturesExtracted(): bool
+    {
+        return $this->featuresExtracted;
+    }
+
+    public function setFeaturesExtracted(bool $featuresExtracted): void
+    {
+        $this->featuresExtracted = $featuresExtracted;
     }
 
     public function getLastChangeAt(): \DateTimeInterface

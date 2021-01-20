@@ -41,7 +41,7 @@ class ProjectImportCommand extends Command
 
         $serializer = new Serializer([new ObjectNormalizer()], [new CsvEncoder()]);
 
-        $data = $serializer->decode(file_get_contents('data/extract4.csv'), 'csv');
+        $data = $serializer->decode(file_get_contents('data/more_truth.csv'), 'csv');
 
         foreach ($data as $project) {
             $shortName = str_replace('https://api.github.com/repos/', '', $project['name']);
@@ -70,6 +70,11 @@ class ProjectImportCommand extends Command
 
             // We override the short name in case the repo has been renamed...
             $shortName = $content['full_name'];
+
+            $existingProject = $this->entityManager->getRepository(Project::class)->findOneBy(['name' => $shortName]);
+            if (null !== $existingProject) {
+                continue;
+            }
 
             $dbProject = new Project();
             $dbProject->setName($shortName);
