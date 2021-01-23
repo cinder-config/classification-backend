@@ -4,15 +4,18 @@ namespace App\Entity;
 
 use App\Model\Id;
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProjectClassificationRepository")
  */
-class ProjectClassification
+class ProjectClassification implements TimestampableInterface
 {
     use Id;
+    use TimestampableTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="classifications")

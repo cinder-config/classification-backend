@@ -131,6 +131,9 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.3"
     },
+    "knplabs/doctrine-behaviors": {
+        "version": "v2.0.8"
+    },
     "laminas/laminas-code": {
         "version": "3.4.1"
     },
@@ -151,6 +154,9 @@
         "files": [
             "config/packages/nelmio_cors.yaml"
         ]
+    },
+    "nette/utils": {
+        "version": "v3.2.1"
     },
     "ocramius/package-versions": {
         "version": "1.9.0"
