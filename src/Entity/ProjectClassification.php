@@ -25,7 +25,7 @@ class ProjectClassification implements TimestampableInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="classifications")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private User $user;
 
@@ -76,6 +76,16 @@ class ProjectClassification implements TimestampableInterface
     public function setProject(Project $project): void
     {
         $this->project = $project;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 
     public function getStatus(): string
