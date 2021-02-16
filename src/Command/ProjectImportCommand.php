@@ -41,7 +41,7 @@ class ProjectImportCommand extends Command
 
         $serializer = new Serializer([new ObjectNormalizer()], [new CsvEncoder()]);
 
-        $data = $serializer->decode(file_get_contents('data/more_truth.csv'), 'csv');
+        $data = $serializer->decode(file_get_contents('data/truth.csv'), 'csv');
 
         foreach ($data as $project) {
             $shortName = str_replace('https://api.github.com/repos/', '', $project['name']);
@@ -84,6 +84,8 @@ class ProjectImportCommand extends Command
             $dbProject->setStars($content['watchers']);
             $dbProject->setForks($content['forks']);
             $dbProject->setLastChangeAt(new \DateTime($content['pushed_at']));
+            $dbProject->setBucket($project['bucket']);
+            $dbProject->setFeaturesExtracted(false);
 
             // Number of commits, little fancy..
             $response = $this->client->request('GET', 'https://api.github.com/repos/'.$shortName.'/commits?per_page=1',
@@ -119,15 +121,19 @@ class ProjectImportCommand extends Command
             $dbProject->setConfiguration($config);
 
             // Fetch whether travis-ci.org OR travis-ci.com
-            $travisCiOrgResponse = $this->client->request('GET',
-                'https://api.travis-ci.org/repo/'.urlencode($shortName), [
-                    'headers' => [
-                        'Accept' => 'application/json',
-                        'Authorization' => 'token '.$this->travisCiOrgToken,
-                        'Travis-API-Version' => '3',
-                    ],
-                ]);
-            $travisCiOrgData = $travisCiOrgResponse->toArray();
+            try {
+                $travisCiOrgResponse = $this->client->request('GET',
+                    'https://api.travis-ci.org/repo/'.urlencode($shortName), [
+                        'headers' => [
+                            'Accept'             => 'application/json',
+                            'Authorization'      => 'token '.$this->travisCiOrgToken,
+                            'Travis-API-Version' => '3',
+                        ],
+                    ]);
+                $travisCiOrgData = $travisCiOrgResponse->toArray();
+            } catch (\Exception $exception) {
+                $travisCiOrgData['@type'] = 'error';
+            }
             if ('error' === $travisCiOrgData['@type'] or false === $travisCiOrgData['active']) {
                 $travisCiComResponse = $this->client->request('GET',
                     'https://api.travis-ci.com/repo/'.urlencode($shortName), [
